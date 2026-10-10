@@ -1,11 +1,11 @@
 local scripts = {
     [78490532994307] = {
         name = "Build An Ant Empire",
-        url = "https://raw.githubusercontent.com/Phoowarit/AntEmpireHub/main/games/Build%20An%20Ant%20Empire/Build%20An%20Ant%20Empire.lua",
+        url = "https://raw.githubusercontent.com/Phoowarit/JOJOHUB-Scripts/main/games/Build%20An%20Ant%20Empire/Build%20An%20Ant%20Empire.lua",
     },
     [113290951185459] = {
         name = "Anime Dice",
-        url = "https://raw.githubusercontent.com/Phoowarit/AntEmpireHub/main/games/Anime%20Dice/Anime_Dice.lua",
+        url = "https://raw.githubusercontent.com/Phoowarit/JOJOHUB-Scripts/main/games/Anime%20Dice/Anime_Dice.lua",
     },
 }
 
