@@ -721,6 +721,36 @@ pcall(function()
     end
 end)
 
+local function addConfiguredRarities()
+    if type(battle_tbunit) ~= "table" then
+        return
+    end
+
+    local knownRarities = {}
+    for _, rarity in ipairs(RarityList) do
+        knownRarities[string.lower(rarity)] = true
+    end
+
+    local discoveredRarities = {}
+    for _, unitConfig in pairs(battle_tbunit) do
+        if type(unitConfig) == "table" and type(unitConfig.Rarity) == "string" then
+            local rarity = unitConfig.Rarity:match("^%s*(.-)%s*$")
+            local normalizedRarity = string.lower(rarity)
+            if rarity ~= "" and not knownRarities[normalizedRarity] then
+                knownRarities[normalizedRarity] = true
+                table.insert(discoveredRarities, rarity)
+            end
+        end
+    end
+
+    table.sort(discoveredRarities)
+    for _, rarity in ipairs(discoveredRarities) do
+        table.insert(RarityList, rarity)
+    end
+end
+
+addConfiguredRarities()
+
 -- ----- ตัวช่วยอ่านราคาอัปเกรด (ทนต่อรูปแบบข้อมูลที่ต่างกัน) -----
 local function reloadAttrConfig()
     if battle_tbattribute then return end
@@ -1842,9 +1872,14 @@ regToggle(Tabs.Shop, "Shop", "AutoResourceConverter", {
     Callback = function(v) Flags.AutoResourceConverter = v end
 })
 
+local converterRarityList = {"None"}
+for _, rarity in ipairs(RarityList) do
+    table.insert(converterRarityList, rarity)
+end
+
 ConfigControls.ConverterAnts = Tabs.Shop:Dropdown({
     Title = "Rarities to Convert",
-    Values = { "None", "Common", "Uncommon", "Rare", "Epic", "Legendary" },
+    Values = converterRarityList,
     Value = Flags.ConverterAnts,
     Callback = function(v) Flags.ConverterAnts = v end
 })
